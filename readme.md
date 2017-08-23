@@ -5,3 +5,7 @@
 ### this is even smaller
 
 ###### this might be the smallest
+
+[link to google] (http://google.com)
+
+### [link to github](github.com)
