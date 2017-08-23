@@ -6,6 +6,6 @@
 
 ###### this might be the smallest
 
-[link to google] (http://google.com)
+[link to google](http://google.com)
 
 ### [link to github](github.com)
