@@ -1,5 +1,8 @@
 # CIM540
 
+I'm Jessica and a sophomore transfer student. I'm already worried about this class and it just started!!!!!!
+
+
 ## this is smaller than above
 
 ### this is even smaller
