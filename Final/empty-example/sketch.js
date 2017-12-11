@@ -2,6 +2,7 @@ var centerX = 0;
 var centerY = 0;
 var bgColor;
 var pitchSlider;
+//var volumeSlider;
 var stylus;
 var play;
 var pause;
@@ -13,7 +14,7 @@ var song1;
 var song2;
 var song3;
 var song4; 
-var record;
+var record; 
 
 var interfaceItems = [];
 var imageArray=[];
@@ -34,8 +35,11 @@ record= loadImage("assets/record.png");
     
     songArray.push(loadSound("assets/getaway.mp3"));
     songArray.push(loadSound("assets/friends.mp3"));
+    songArray.push(loadSound("assets/bleachers.mp3"));
+    songArray.push(loadSound("assets/kiwi.mp3"));
     songArray.push(loadSound("assets/thunder.mp3"));
-    songArray.push(loadSound("assets/wolves.mp3")); 
+    songArray.push(loadSound("assets/wolves.mp3"));
+    songArray.push(loadSound("assets/slowhands.mp3"));
     
 }
 
@@ -57,23 +61,24 @@ interfaceItems.push(new interface(410,410,50, imageArray[3]));
     
     
     //slider
-   pitchSlider = createSlider(-2, 2, 0); 
-pitchSlider.position(300,325);
+   pitchSlider = createSlider(0, 2, 1,0.5); 
+  pitchSlider.position(300,320);
      pitchSlider.style('width', '180px');
+    
+    /*volumeSlider = createSlider(0,2,1,.05);
+    volumeSlider.position(300,325);
+    volumeSlider.style('width','180px');
+   */
+    noStroke();
+    
+}
    
 function draw(){
 
 background(bgColor);
  
-interfaceItems[0].check();
-  interfaceItems[0].display();
-  interfaceItems[1].check();
-  interfaceItems[1].display();
-  interfaceItems[2].check();
-  interfaceItems[2].display();
-  interfaceItems[3].check();
-  interfaceItems[3].display();
-    }
+
+    
 
 
     //side
@@ -89,6 +94,14 @@ interfaceItems[0].check();
     ellipse(centerX + 96, centerY + 6, 440, 440);
    
    
+    speed = constrain(pitchSlider.value(), 0.01, 2);
+   songArray[soundCounter].rate(speed);
+    
+    
+   // setVolume = constrain(pitchSlider.value(), 1, .5);
+   //songArray[soundCounter].rate(volume);
+
+   
 
     
 push();
@@ -100,11 +113,22 @@ push();
 
    pop();
 
-       image(stylus,823,325);
-   image(imageArray[0],325,220);
-   image(imageArray[1],410,220);
-   image(imageArray[2],325,410);
-   image(imageArray[3],410,410); 
+    image(stylus,823,325);
+   //image(imageArray[0],325,220);
+   //image(imageArray[1],410,220);
+   //image(imageArray[2],325,410);
+   //image(imageArray[3],410,410); 
+    
+  interfaceItems[0].check();
+  interfaceItems[0].display();
+  interfaceItems[1].check();
+  interfaceItems[1].display();
+  interfaceItems[2].check();
+  interfaceItems[2].display();
+  interfaceItems[3].check();
+  interfaceItems[3].display();
+    
+    
 }
 
 
@@ -122,9 +146,16 @@ function interface(tempX, tempY, tempBoxSize, tempImage){
     image(this.img, this.x, this.y, this.boxSize, this.boxSize);
 
     if(this.overlay == true){
+               // console.log("working");
+        
+
       fill(255,200);
-      rect(this.x, this.y, this.boxSize, this.boxSize);
+        
+    ellipse(this.x+25, this.y+25, this.boxSize, this.boxSize);
+
     }
+      
+
   }
 
   this.check = function(){
@@ -138,21 +169,43 @@ function interface(tempX, tempY, tempBoxSize, tempImage){
   }
     
 }
+
+
 function mousePressed(){
   if(interfaceItems[0].check() == true){
-    songArray.play();
+    songArray[soundCounter].play();
   }
 
   if(interfaceItems[1].check() == true){
-    songArray.stop();
-  }
-    
-    if(interfaceItems[2].check() == true){
-    songArray.next();
+    songArray[soundCounter].pause();
   }
     
     if(interfaceItems[3].check() == true){
-    songArray.previous();
+    //songArray[soundCounter].next();
+        songArray[soundCounter].stop();
+        soundCounter++;
+        if(soundCounter >= songArray.length){
+           soundCounter = 0;
+           }
+            songArray[soundCounter].play();
+
+        console.log(soundCounter);
+  }
+    
+    if(interfaceItems[2].check() == true){
+    //songArray[soundCounter].previous();
+            
+            songArray[soundCounter].stop();
+            soundCounter--;
+                if(soundCounter < songArray.length){
+           soundCounter = 6;
+           }
+        songArray[soundCounter].play();
+
+
+                console.log(soundCounter);
+
+
   }
 }
 
